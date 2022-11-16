@@ -2,13 +2,15 @@ package ObjBen;
 import ObjBen.MenuItem;
 class CoffeeShop
 {
+	// Declare Properties.
 	private String name;
 	private ObjBen.MenuItem[] menu;
 	private String[] orders;
 	private int lastOrder;
 	private int menuSize;
-	private int currItem;
+	private int lastItemMenu;
 	
+	// Constructor.
 	public CoffeeShop(String name, int size)
 	{
 		this.name = name;
@@ -16,20 +18,20 @@ class CoffeeShop
 		this.menu = new ObjBen.MenuItem[this.menuSize];
 		this.orders = new String[100];
 		this.lastOrder = 0;
-		this.currItem = 0;
+		this.lastItemMenu = 0;
 	}
 	
 	public void addToMenu(MenuItem item)
 	{
-		this.menu[this.currItem] = item;
-		this.currItem++;
+		this.menu[this.lastItemMenu] = item;
+		this.lastItemMenu++;
 	}
 	
 	public String addOrder(String name)
 	{
 		int i;
-		for(i = 0; i < this.currItem && !(this.menu[i].getName().equals(name)); i++);
-		if(i == this.currItem)
+		for(i = 0; i < this.lastItemMenu && !(this.menu[i].getName().equals(name)); i++);
+		if(i == this.lastItemMenu)
 			return "This item is currently unavailable!";
 		this.orders[this.lastOrder] = name;
 		this.lastOrder++;
@@ -58,11 +60,17 @@ class CoffeeShop
 	
 	public double dueAmount()
 	{
-		double sum = 0.0d;
+		double sum = 0.0;
 		int j;
 		for(int i = 0; i < this.lastOrder; i++)
 		{
-			for(j = 0; this.menu[j].getName().equals(this.orders[i]); j++);
+			for(j = 0; j < this.lastItemMenu; j++)
+			{
+				if(this.menu[j].getName().equals(this.orders[i]))
+				{
+					break;
+				}
+			}
 			sum += this.menu[j].getPrice();
 		}
 		return sum;
@@ -72,7 +80,7 @@ class CoffeeShop
 	{
 		double minPrice = 1000.0;
 		String minName = "Null?";
-		for(int i = 0; i < this.currItem; i++)
+		for(int i = 0; i < this.lastItemMenu; i++)
 		{
 			if(this.menu[i].getPrice() < minPrice)
 			{
@@ -86,7 +94,7 @@ class CoffeeShop
 	public String[] drinksOnly()
 	{
 		int count = 0;
-		for(int i = 0; i < this.currItem; i++)
+		for(int i = 0; i < this.lastItemMenu; i++)
 		{
 			if(this.menu[i].getType().equals("Drink"))
 			{
@@ -95,7 +103,7 @@ class CoffeeShop
 		}
 		String[] drinks = new String[count];
 		count = 0;
-		for(int i = 0; i < this.currItem; i++)
+		for(int i = 0; i < this.lastItemMenu; i++)
 		{
 			if(this.menu[i].getType().equals("Drink"))
 			{
@@ -109,7 +117,7 @@ class CoffeeShop
 	public String[] foodOnly()
 	{
 		int count = 0;
-		for(int i = 0; i < this.currItem; i++)
+		for(int i = 0; i < this.lastItemMenu; i++)
 		{
 			if(this.menu[i].getType().equals("Food"))
 			{
@@ -118,7 +126,7 @@ class CoffeeShop
 		}
 		String[] foods = new String[count];
 		count = 0;
-		for(int i = 0; i < this.currItem; i++)
+		for(int i = 0; i < this.lastItemMenu; i++)
 		{
 			if(this.menu[i].getType().equals("Food"))
 			{

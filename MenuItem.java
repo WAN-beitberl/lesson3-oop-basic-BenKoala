@@ -1,9 +1,12 @@
 package ObjBen;
 class MenuItem
 {
+	// Declare Properties
 	private String name;
 	private String type;
 	private double price;
+	
+	// Constructor
 	public MenuItem(String name, String type, double price)
 	{
 		this.name = name;
